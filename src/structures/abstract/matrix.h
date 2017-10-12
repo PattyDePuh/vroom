@@ -1,45 +1,30 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-/*
+/* matrix.h
 
-This file is part of VROOM.
-
-Copyright (c) 2015-2017, Julien Coupey.
-All rights reserved (see LICENSE).
+matrix is a virtual class, which is derived 
+by content_matrix and sub_matrix_wrapper.
+It promises the algorithms to access a matrix 
+without the need to know who and how the matrix entries
+are retrieved.
 
 */
-
-#include <vector>
 
 #include "../typedefs.h"
 
 template <class T>
-class line : private std::vector<T> {
-
-  using parent = std::vector<T>;
-
+class matrix_row{
 public:
-  using parent::size;
-  using parent::operator[];
-
-  line(std::size_t n);
+  virtual T operator[](index_t n);
+  virtual std::size_t size();
 };
 
 template <class T>
-class matrix : private std::vector<line<T>> {
-
-  using parent = std::vector<line<T>>;
-
+class matrix{
 public:
-  using parent::size;
-  using parent::operator[];
-
-  matrix();
-
-  matrix(std::size_t n);
-
-  matrix<T> get_sub_matrix(const std::vector<index_t>& indices) const;
+  virtual matrix_row<T> operator[](index_t n);
+  virtual std::size_t size();
 };
 
 #endif
